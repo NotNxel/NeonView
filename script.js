@@ -6,7 +6,7 @@ function getRecommendations() {
 
     document.getElementById('results').innerHTML = 'Getting recommendations...';
 
-    fetch('http://127.0.0.1:5000/recommend', { // change this to your online backend later!
+    fetch('http://127.0.0.1:5000/recommend', { // Update to your deployed backend API URL!
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({shows: shows})
@@ -15,7 +15,7 @@ function getRecommendations() {
     .then(data => {
         if (data.top_shows && data.top_shows.length > 0) {
             document.getElementById('results').innerHTML =
-                '<h2 style="color:#19ffe6;margin-bottom:0.7em;">Top Recommendations:</h2>' +
+                '<h2 style="color:#19ffe6;margin-bottom:0.7em;text-shadow:0 0 14px #19ffe69c;">Top Recommendations:</h2>' +
                 '<ul>' + data.top_shows.map(
                     show => `<li>${show}</li>`
                 ).join('') + '</ul>';
