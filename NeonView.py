@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Load the Netflix dataset
-df = pd.read_csv('Netflix Algorithm/netflix_titles.csv')
+df = pd.read_csv('show_titles.csv')
 
 # Step 1: Input watched titles
 watched = []
@@ -114,3 +114,4 @@ top_recommendations = [title for title, score in sorted_recommendations][:5]
 print("Top movie recommendations for you:")
 for rec in top_recommendations:
     print(f"- {rec}")
+
