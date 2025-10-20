@@ -2,18 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>NeonView Recommendations</title>
+    <title>NeonView: Show Recommender</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>NeonView: Show Recommender</h1>
-    <div>
-        <label for="watched">Enter shows you’ve watched (comma separated):</label>
-        <input type="text" id="watched" placeholder="Dexter, Narcos, Sherlock">
-        <button onclick="getRecommendations()">Recommend</button>
+    <div class="container">
+        <h1>NeonView</h1>
+        <p class="subtitle">Show Recommender</p>
+        <div class="input-group">
+            <input 
+                type="text" 
+                id="watched" 
+                class="curved-input"
+                placeholder="Enter shows you’ve watched: Dexter, Narcos, Sherlock">
+            <button class="recommend-btn" onclick="getRecommendations()">Recommend</button>
+        </div>
+        <div id="results"></div>
     </div>
-    <div id="results"></div>
     <script src="script.js"></script>
 </body>
 </html>
-
