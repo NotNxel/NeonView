@@ -3,11 +3,10 @@ function getRecommendations() {
         .split(',')
         .map(s => s.trim())
         .filter(s => s.length > 0);
-        
-    // Show loading message
+
     document.getElementById('results').innerHTML = 'Getting recommendations...';
 
-    fetch('http://127.0.0.1:5000/recommend', {
+    fetch('http://127.0.0.1:5000/recommend', { // change this to your online backend later!
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({shows: shows})
@@ -16,9 +15,10 @@ function getRecommendations() {
     .then(data => {
         if (data.top_shows && data.top_shows.length > 0) {
             document.getElementById('results').innerHTML =
-                '<h2>Top Recommendations:</h2>' +
+                '<h2 style="color:#19ffe6;margin-bottom:0.7em;">Top Recommendations:</h2>' +
                 '<ul>' + data.top_shows.map(
-                    show => `<li>${show}</li>`).join('') + '</ul>';
+                    show => `<li>${show}</li>`
+                ).join('') + '</ul>';
         } else {
             document.getElementById('results').innerHTML = 'No recommendations found.';
         }
@@ -27,4 +27,3 @@ function getRecommendations() {
         document.getElementById('results').innerHTML = 'Error: Unable to connect to backend.';
     });
 }
-
