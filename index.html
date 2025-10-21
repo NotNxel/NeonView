@@ -10,30 +10,14 @@
         <source src="bg.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
-
-    <div class="container">
-        <div class="header-section">
-            <h1>NeonView</h1>
-            <p class="subtitle">Find your next binge-worthy show</p>
-        </div>
-        <div class="search-section">
-            <div class="input-group">
-                <input 
-                    type="text" 
-                    id="watched" 
-                    class="curved-input"
-                    placeholder="Enter shows you've watched…">
-                <button class="recommend-btn" onclick="getRecommendations()">
-                    <span>Get Recommendations</span>
-                </button>
-            </div>
-        </div>
+    <div class="main-header">
+        <h1>NeonView</h1>
     </div>
+
     <div id="results-section">
         <div class="result-section">Recommended for You</div>
-        <div id="results">
-            <!-- Recommendation cards will appear here -->
-        </div>
+        <div id="results"></div>
+        <button class="done-btn" onclick="doneAction()">Done</button>
     </div>
     <script src="script.js"></script>
 </body>
