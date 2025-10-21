@@ -7,7 +7,6 @@ body {
     min-height: 100vh;
     overflow-x: hidden;
 }
-
 #bgVideo {
     position: fixed;
     top: 0;
@@ -43,119 +42,87 @@ body {
     text-shadow: 0 2px 12px #13ff6658, 0 0 1px #fff;
 }
 
-#results-section {
-    max-width: 900px;
-    margin: 2vh auto 5vh auto;
-    padding: 0 2vw;
-}
-
-.result-section {
-    font-weight: 700;
-    font-size: 1.24em;
-    letter-spacing: 0.1em;
-    color: #18ff58;
-    text-shadow: 0 0 9px #11b84844;
-    margin: 2.8em 0 1em 0.1vw;
-}
-
-/* Horizontal row of recommendations */
-#results {
-    display: flex;
-    gap: 1.4em;
-    padding: 0.5em 0 2.5em 0;
-    min-height: 2rem;
-    overflow-x: auto;
-    scrollbar-width: thin;
-    align-items: flex-start;
-}
-
-/* Each show: simple minimal box */
-.result-card {
-    min-width: 180px;
-    max-width: 210px;
-    background: #05180b;
-    border-radius: 18px;
-    border: 2.5px solid #18ff5860;
-    box-shadow: 0 2.5px 14px 0 #18ff582c;
-    padding: 1.2em 1em 0.9em 1em;
+/* Searchbar Pills Section */
+.pill-search-section {
+    max-width: 600px;
+    margin: 2em auto 1.7em auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: box-shadow .21s, transform .18s;
+}
+
+#searchform {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1em;
+}
+
+.pill-searchbar {
+    min-height: 54px;
+    width: 100%;
+    background: rgba(240,255,240,0.17);
+    border-radius: 28px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    box-shadow: 0 2px 12px 1px rgba(50,255,100,0.14);
+    padding: 0.25em 0.8em 0.25em 1em;
     position: relative;
-}
-.result-card:hover {
-    box-shadow: 0 9px 39px 2px #18ff58b5;
-    transform: translateY(-5px) scale(1.04);
-    border-color: #18ff58;
+    backdrop-filter: blur(11.5px);
+    -webkit-backdrop-filter: blur(11.5px);
 }
 
-.result-poster {
-    width: 100px;
-    height: 133px;
-    object-fit: cover;
-    border-radius: 13px;
-    box-shadow: 0 0 12px #18ff581a;
-    background: #083a10;
-    margin-bottom: 0.8em;
-}
-
-.result-title {
-    font-size: 1.08em;
-    font-weight: 700;
-    color: #19ff5c;
-    margin-bottom: 0.14em;
-    text-align: center;
-}
-
-.result-year {
-    font-size: 0.96em;
-    color: #13dd52;
-    opacity: 0.7;
-    margin-bottom: 0.21em;
-    text-align: center;
-}
-
-.result-desc {
-    font-size: 0.96em;
-    color: #b9fff0;
-    opacity: 0.90;
-    text-align: center;
-    margin-bottom: 0.3em;
-}
-
-/* Done Button Style */
-.done-btn {
-    margin: 2.6em auto;
-    display: block;
-    background: linear-gradient(90deg, #18ff58 15%, #146e26 100%);
-    color: #031309;
-    font-size: 1.18em;
-    font-weight: 800;
+.search-pill-input {
+    flex: 1 1 auto;
+    min-width: 120px;
+    max-width: 320px;
+    font-size: 1.14em;
     border: none;
-    border-radius: 13em;
-    padding: 1em 3.6em;
-    cursor: pointer;
-    box-shadow: 0 8px 38px 0 #18ff584b;
     outline: none;
-    transition: background .19s, color .19s, transform .17s;
-    letter-spacing: 0.11em;
+    background: transparent;
+    color: #def9cf;
+    margin: 0.25em 0;
+    padding: 0.57em 0.9em 0.57em 0.2em;
+    font-weight: 500;
 }
-.done-btn:hover {
-    background: linear-gradient(90deg, #13dd52 15%, #18ff58 100%);
-    color: #020b05;
-    transform: scale(1.05);
-}
-.done-btn:active {
-    color: #13b840;
-    background: linear-gradient(90deg, #13dd52 15%, #146e26 100%);
-    transform: scale(0.99);
+.search-pill-input::placeholder {
+    color: #a7e2be;
+    opacity: 0.93;
+    font-weight: 500;
 }
 
-/* Make layout mobile-friendly */
-@media (max-width: 700px) {
-    .main-header {padding: 1.4rem 3vw;}
-    .main-header h1 {font-size: 1.65rem;}
-    #results {gap: 0.85em;}
-    .result-card {min-width: 140px;}
+.pill {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(90deg,#18ff58 50%,#12bb3c 100%);
+    color: #092e13;
+    border-radius: 20px;
+    box-shadow: 0 1px 3px #15ea4aa2;
+    font-size: 1.05em;
+    margin: 0.18em 0.36em 0.18em 0;
+    padding: 0.33em 1.1em 0.33em 1.1em;
+    font-weight: 700;
+    position: relative;
+    z-index: 2;
 }
+.pill .pill-remove {
+    cursor: pointer;
+    margin-left: 0.76em;
+    background: #0f2e16;
+    color: #18ff58;
+    border-radius: 50%;
+    border: none;
+    padding: 0.09em 0.54em;
+    font-size: 1em;
+    font-weight: 900;
+    outline: none;
+    transition: background .12s;
+}
+.pill .pill-remove:hover {background: #16e946;color:#fff;}
+
+.suggestions {
+    position: absolute;
+    left: 0.6em;
+    top: 100%;
