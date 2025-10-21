@@ -1,8 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Movie Recommendation Demo</title>
+<style>
+  /* Basic styles to match your existing theme */
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: #18191A;
+    color: #f3f3f3;
+    margin: 0;
+    padding: 20px;
+  }
+  #pill-container {
+    margin-bottom: 12px;
+    min-height: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .pill {
+    background: #B39CD0;
+    color: #18191A;
+    padding: 6px 14px;
+    border-radius: 25px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    cursor: default;
+  }
+  .pill button {
+    background: none;
+    border: none;
+    margin-left: 10px;
+    color: #18191A;
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+  .pill button:hover {
+    color: #30e5ff;
+  }
+  #search-input {
+    width: 100%;
+    max-width: 530px;
+    padding: 16px 24px;
+    font-size: 1.15rem;
+    border-radius: 50px;
+    border: none;
+    background: #21223A;
+    color: #30e5ff;
+    box-shadow: inset 0 2px 8px #b39cd022;
+    outline: none;
+  }
+  #suggestions {
+    background: #292A38;
+    border-radius: 14px;
+    margin-top: 4px;
+    max-height: 120px;
+    overflow-y: auto;
+    font-size: 1rem;
+    color: #B39CD0;
+    max-width: 530px;
+  }
+  .suggestion-item {
+    padding: 12px 20px;
+    border-bottom: 1px solid #22223A;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .suggestion-item:last-child {
+    border-bottom: none;
+  }
+  .suggestion-item:hover {
+    background: #B39CD0;
+    color: #292A38;
+  }
+  #done-button {
+    margin-top: 16px;
+    padding: 16px 56px;
+    font-size: 1.15rem;
+    background: linear-gradient(90deg, #B39CD0 60%, #30e5ff 100%);
+    color: #18191A;
+    border-radius: 55px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 22px #b39cd0aa;
+  }
+  #done-button:disabled {
+    background: #777;
+    color: #222;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+  #done-button:not(:disabled):hover {
+    box-shadow: 0 10px 40px #b39cd0cc;
+    transform: scale(1.07);
+  }
+  #recommendations {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+  }
+  .recommend-card {
+    background: #292A38;
+    border-radius: 14px;
+    padding: 16px;
+    text-align: center;
+    box-shadow: 0 0 14px #b39cd034;
+  }
+  .recommend-card img {
+    width: 150px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 4px 18px #0006;
+  }
+  .recommend-card h3 {
+    margin: 1rem 0 0.5rem 0;
+    color: #B39CD0;
+    font-weight: bold;
+  }
+  .recommend-card .info {
+    font-size: 0.95rem;
+    color: #AAA;
+    margin-bottom: 8px;
+  }
+  .recommend-card p {
+    font-size: 1rem;
+    color: #f3f3f3;
+  }
+</style>
+</head>
+<body>
+
+<div id="pill-container"></div>
+<input id="search-input" type="text" placeholder="Search movies or actors..." autocomplete="off" />
+<div id="suggestions"></div>
+<button id="done-button" disabled>Get Recommendations</button>
+<div id="recommendations"></div>
+
+<script>
 const moviesDb = [
-  // Demo dataset
   { title: 'Dexter', poster: 'https://www.themoviedb.org/t/p/w300_and_h450_bestv2/zHh8B0RqrFttxh1lENkemE5QMmE.jpg', genre: 'Crime, Drama', director: 'Michael Cuesta', actors: 'Michael C. Hall', country: 'US', desc: 'A Miami forensic expert hides his double life as a serial killer while solving crimes.' },
   { title: 'The Defeated', poster: 'https://www.themoviedb.org/t/p/w300_and_h450_bestv2/ap2Cf1mIhK83rjbjUdR4UKzQ5qg.jpg', genre: 'Thriller, Crime', director: 'Mans Marlind', actors: 'Taylor Kitsch', country: 'DE', desc: 'Set in Berlin during the aftermath of WWII, detectives search for justice.' },
-  { title: 'Sade', poster: 'https://www.themoviedb.org/t/p/w300_and_h450_bestv2/igRUnb6P5a4Aww7JDDn5NbBP9JJ.jpg', genre: 'Drama', director: 'Marie-Amélie,' , actors: 'Daniel Auteuil', country: 'FR', desc: 'A Frenchman tries to survive in 18th-century political turmoil.' },
+  { title: 'Sade', poster: 'https://www.themoviedb.org/t/p/w300_and_h450_bestv2/igRUnb6P5a4Aww7JDDn5NbBP9JJ.jpg', genre: 'Drama', director: 'Marie-Amélie', actors: 'Daniel Auteuil', country: 'FR', desc: 'A Frenchman tries to survive in 18th-century political turmoil.' },
   { title: 'Christine', poster: 'https://www.themoviedb.org/t/p/w300_and_h450_bestv2/AoDlvFfYE74tgE2oi4N8E1u4GTZ.jpg', genre: 'Biography, Drama', director: 'Antonio Campos', actors: 'Rebecca Hall, Michael C. Hall', country: 'US', desc: 'The true story of Christine Chubbuck, a news reporter.' },
   { title: 'Boardwalk Empire', poster: 'https://www.themoviedb.org/t/p/w300_and_h450_bestv2/bDkVOj1MYpt9QfxNkX3yQAxpLp7.jpg', genre: 'Crime, Drama, History', director: 'Terence Winter', actors: 'Steve Buscemi, Michael Shannon', country: 'US', desc: 'Atlantic City in the Prohibition era ruled by powerful criminals.' },
   { title: 'Six Feet Under', poster: 'https://www.themoviedb.org/t/p/w300_and_h450_bestv2/lmoULwbtgVrweqWZWzm7UodPkOn.jpg', genre: 'Drama', director: 'Alan Ball', actors: 'Peter Krause, Michael C. Hall', country: 'US', desc: 'A family runs a funeral home in LA, navigating personal drama.' },
@@ -11,7 +158,7 @@ const moviesDb = [
   { title: 'Castle', poster: 'https://www.themoviedb.org/t/p/w300_and_h450_bestv2/iGaYZBCRsEIAh0Y1rPp5WGLgBcs.jpg', genre: 'Crime, Comedy', director: 'Andrew W. Marlowe', actors: 'Nathan Fillion', country: 'US', desc: 'A mystery novelist teams with an NYPD detective to solve crimes.' }
 ];
 
-// Case-insensitive fuzzy match
+// Case-insensitive fuzzy search
 function autoSuggest(query) {
   const q = query.toLowerCase();
   return moviesDb.filter(movie =>
@@ -73,22 +220,17 @@ searchInput.addEventListener('input', () => {
 });
 
 doneBtn.onclick = () => {
-  // Recommend logic: based on actors, director, genre, etc.
-  // Score all movies by how many shared actors, director, or genre with watched list.
   if (watched.length === 0) return;
   const watchedObjs = moviesDb.filter(m => watched.includes(m.title));
-  // Helper - create arrays of actors/director/genre
   function arr(str){
     return str ? str.split(/,\s*/) : [];
   }
-  // Aggregate features
   let allActors = [], allDirectors = [], allGenre = [];
   watchedObjs.forEach(m => {
     allActors = allActors.concat(arr(m.actors));
     allDirectors = allDirectors.concat(arr(m.director));
     allGenre = allGenre.concat(arr(m.genre));
   });
-  // Recommendation score
   const scores = moviesDb.map(m => {
     if (watched.includes(m.title)) return {movie:m,score:-1};
     let score = 0;
@@ -127,3 +269,7 @@ doneBtn.onclick = () => {
 
 renderPills();
 renderButton();
+</script>
+
+</body>
+</html>
