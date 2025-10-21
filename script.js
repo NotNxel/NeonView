@@ -1,14 +1,4 @@
-const moviesDb = [
-  { title: 'The Defeated', poster: 'https://pixabay.com/get/g38d4a66e5643e0ca4be15a850c9d6428bcedb7b50df2c8d6eeafeaa82c0c48f6_300.jpg', genre: 'Thriller, Crime', director: 'Mans Marlind', actors: 'Taylor Kitsch', country: 'DE', desc: 'Set in Berlin during the aftermath of WWII, detectives search for justice.' },
-  { title: 'Sade', poster: 'https://images.unsplash.com/photo-1486308510493-c7951292e074?auto=format&fit=crop&w=300&q=80', genre: 'Drama', director: 'Marie-Amélie', actors: 'Daniel Auteuil', country: 'FR', desc: 'A Frenchman tries to survive in 18th-century political turmoil.' },
-  { title: 'Christine', poster: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=300&q=80', genre: 'Biography, Drama', director: 'Antonio Campos', actors: 'Rebecca Hall, Michael C. Hall', country: 'US', desc: 'The true story of Christine Chubbuck, a news reporter.' },
-  { title: 'Boardwalk Empire', poster: 'https://pixabay.com/get/g199f75a7bb5e53e521975a98a4f9ef2fdc75457f30520f61537c43ac255c4183_300.jpg', genre: 'Crime, Drama, History', director: 'Terence Winter', actors: 'Steve Buscemi, Michael Shannon', country: 'US', desc: 'Atlantic City in the Prohibition era ruled by powerful criminals.' },
-  { title: 'Six Feet Under', poster: 'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=300&q=80', genre: 'Drama', director: 'Alan Ball', actors: 'Peter Krause, Michael C. Hall', country: 'US', desc: 'A family runs a funeral home in LA, navigating personal drama.' },
-  { title: 'Sherlock', poster: 'https://pixabay.com/get/g87e6bf3440fafabf53ffa9e0f8f56bcc38d43a03e3dfae0bc55f2742aff3b88b_300.jpg', genre: 'Crime, Mystery', director: 'Paul McGuigan', actors: 'Benedict Cumberbatch', country: 'UK', desc: 'Modern-day adaptation of Sherlock Holmes detective stories.' },
-  { title: 'True Detective', poster: 'https://images.unsplash.com/photo-1484103770520-7acfcbf7473b?auto=format&fit=crop&w=300&q=80', genre: 'Crime, Thriller', director: 'Cary Joji Fukunaga', actors: 'Matthew McConaughey', country: 'US', desc: 'Crime drama series with different detectives investigating grisly crimes.' },
-  { title: 'Castle', poster: 'https://pixabay.com/get/g4165b7292bd5b547869cbc3f58a9a49ffed1ae1e77e0e4eb15ccefe4351e2694_300.jpg', genre: 'Crime, Comedy', director: 'Andrew W. Marlowe', actors: 'Nathan Fillion', country: 'US', desc: 'A mystery novelist teams with an NYPD detective to solve crimes.' },
-  // Add more if needed
-];
+
 
 // Your new showsDb dataset integrated below
 const showsDb = [
@@ -114,7 +104,7 @@ const showsDb = [
 ];
 
 // Combine moviesDb and showsDb into one for search and recommendation (optional)
-const combinedDb = [...moviesDb, ...showsDb];
+const combinedDb = [...showsDb];
 
 // Case-insensitive fuzzy match function adapted for combinedDb (use whichever dataset you want)
 function autoSuggest(query) {
