@@ -1,110 +1,84 @@
 const searchInput = document.getElementById('search-input');
-const suggestionsBox = document.getElementById('suggestions');
-const pillContainer = document.getElementById('pill-container');
-const doneButton = document.getElementById('done-button');
+const suggestionsDiv = document.getElementById('suggestions');
+const pillsDiv = document.getElementById('watched-pills');
+const recommendBtn = document.getElementById('recommend-btn');
 const recommendationsDiv = document.getElementById('recommendations');
 
 let watched = [];
 
-function renderPills() {
-  pillContainer.innerHTML = '';
-  watched.forEach((title, i) => {
-    const pill = document.createElement('div');
-    pill.className = 'pill';
-    pill.textContent = title;
-    const removeBtn = document.createElement('button');
-    removeBtn.textContent = '×';
-    removeBtn.onclick = () => {
-      watched.splice(i, 1);
+searchInput.addEventListener('input', async () => {
+  const query = searchInput.value.trim();
+  suggestionsDiv.innerHTML = '';
+  if (query.length < 2) return;
+
+  const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+  const data = await res.json();
+
+  data.forEach(item => {
+    if (watched.includes(item.name)) return;
+    const div = document.createElement('div');
+    div.textContent = item.name;
+    div.className = 'suggestion-item';
+    div.onclick = () => {
+      watched.push(item.name);
       renderPills();
-      updateDoneState();
+      recommendBtn.disabled = false;
+      searchInput.value = '';
+      suggestionsDiv.innerHTML = '';
       recommendationsDiv.innerHTML = '';
     };
-    pill.appendChild(removeBtn);
-    pillContainer.appendChild(pill);
+    suggestionsDiv.appendChild(div);
+  });
+});
+
+function renderPills() {
+  pillsDiv.innerHTML = '';
+  watched.forEach((name, index) => {
+    const pill = document.createElement('span');
+    pill.className = 'pill';
+    pill.textContent = name + ' ×';
+    pill.onclick = () => {
+      watched.splice(index, 1);
+      renderPills();
+      if (watched.length === 0) recommendBtn.disabled = true;
+      recommendationsDiv.innerHTML = '';
+    };
+    pillsDiv.appendChild(pill);
   });
 }
 
-function updateDoneState() {
-  doneButton.disabled = watched.length === 0;
-}
-
-searchInput.addEventListener('input', async () => {
-  const val = searchInput.value.trim();
-  suggestionsBox.innerHTML = '';
-  if (val.length < 2) return;
-  try {
-    const res = await fetch(`/api/search?q=${encodeURIComponent(val)}`);
-    const results = await res.json();
-    results.forEach(item => {
-      if (watched.includes(item.title)) return;
-      const div = document.createElement('div');
-      div.className = 'suggestion-item';
-      div.textContent = item.title;
-      div.onclick = () => {
-        watched.push(item.title);
-        renderPills();
-        updateDoneState();
-        searchInput.value = '';
-        suggestionsBox.innerHTML = '';
-        recommendationsDiv.innerHTML = '';
-      };
-      suggestionsBox.appendChild(div);
-    });
-  } catch (e) {
-    console.error(e);
-  }
-});
-
-doneButton.addEventListener('click', async () => {
+recommendBtn.addEventListener('click', async () => {
   if (watched.length === 0) return;
+
   recommendationsDiv.innerHTML = '<p>Loading recommendations...</p>';
-  try {
-    const res = await fetch('/api/recommend', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ watched }),
-    });
-    const recs = await res.json();
-    renderRecommendations(recs);
-  } catch (e) {
-    recommendationsDiv.innerHTML = '<p>Error loading recommendations.</p>';
-    console.error(e);
-  }
+  const res = await fetch('/api/recommend', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ watched }),
+  });
+  const recs = await res.json();
+  renderRecommendations(recs);
 });
 
-function renderRecommendations(recs) {
-  if (!recs.length) {
+function renderRecommendations(items) {
+  recommendationsDiv.innerHTML = '';
+  if (!items.length) {
     recommendationsDiv.innerHTML = '<p>No recommendations found.</p>';
     return;
   }
-  recommendationsDiv.innerHTML = '';
-  recs.forEach(item => {
-    const card = document.createElement('div');
-    card.className = 'recommend-card';
-
-    const img = document.createElement('img');
-    img.src = item.poster || 'fallback.jpg';
-    img.alt = item.title;
-
-    const title = document.createElement('h3');
-    title.textContent = item.title;
-
-    const info = document.createElement('div');
-    info.className = 'info';
-    info.textContent = (Array.isArray(item.genres) ? item.genres.join(', ') : item.genres || '') +
-      (item.country ? ' | ' + item.country : '');
-
-    const desc = document.createElement('p');
-    desc.textContent = item.description || '';
-
-    card.appendChild(img);
-    card.appendChild(title);
-    card.appendChild(info);
-    card.appendChild(desc);
-    recommendationsDiv.appendChild(card);
+  items.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'recommend-card';
+    div.innerHTML = `
+      <img src="${item.poster}" alt="${item.name}" width="150" />
+      <h3>${item.name}</h3>
+      <p>${item.genre || ''}</p>
+      <p>${item.description || ''}</p>
+      <p>IMDb: ${item.imdb_rating || 'N/A'}</p>
+    `;
+    recommendationsDiv.appendChild(div);
   });
 }
 
-updateDoneState();
 renderPills();
+recommendBtn.disabled = true;
