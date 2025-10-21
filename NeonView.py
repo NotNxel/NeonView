@@ -1,26 +1,27 @@
+from flask import Flask, jsonify, request, render_template
 import json
-from flask import Flask, request, jsonify, render_template
-import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 app = Flask(__name__)
 
-# Load your dataset (replace with your real dataset path)
-# Dataset has: id, title, description, genres, actors, directors, poster_url
-shows_df = pd.read_csv('shows_dataset.csv').fillna('')
+# Load your large JSON dataset (movies + tv shows with posters and metadata)
+with open('Shows_dataset.json', 'r', encoding='utf-8') as f:
+    data = json.load(f)
 
-# Combine searchable fields for content-based recommendation
-shows_df['combined_features'] = (
-    shows_df['genres'] + ' ' + shows_df['actors'] + ' ' + shows_df['directors'] + ' ' + shows_df['description']
-)
+# Preprocess: build combined metadata field for content-based recommendation
+for item in data:
+    features = []
+    features.append(item.get('title',''))
+    features.append(" ".join(item.get('genres', [])) if isinstance(item.get('genres'), list) else item.get('genres',''))
+    features.append(item.get('cast',''))
+    features.append(item.get('director',''))
+    features.append(item.get('description',''))
+    item['combined_features'] = " ".join(features).lower()
 
+titles = [item['title'] for item in data]
 tfidf = TfidfVectorizer(stop_words='english')
-tfidf_matrix = tfidf.fit_transform(shows_df['combined_features'])
-cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
-
-# Map title to index
-title_to_index = pd.Series(shows_df.index, index=shows_df['title'].str.lower())
+tfidf_matrix = tfidf.fit_transform([item['combined_features'] for item in data])
 
 @app.route('/')
 def home():
@@ -28,49 +29,39 @@ def home():
 
 @app.route('/api/search')
 def search():
-    query = request.args.get('q', '').lower()
-    # Simple partial matching
-    matches = shows_df[shows_df['title'].str.lower().str.contains(query)]
-    results = matches[['title', 'poster_url']].head(7).to_dict(orient='records')
-    return jsonify(results)
+    q = request.args.get('q', '').lower()
+    if not q:
+        return jsonify([])
+
+    # Simple substring match for quick search
+    results = [item for item in data if q in item['title'].lower()]
+    return jsonify(results[:10])
 
 @app.route('/api/recommend', methods=['POST'])
 def recommend():
-    """
-    Expects JSON: { watched: ["title1", "title2", ...] }
-    Returns 5 recommended shows with their metadata.
-    """
-    data = request.get_json()
-    watched = [w.lower() for w in data.get('watched', [])]
+    watched = request.json.get('watched', [])
+    if not watched:
+        return jsonify([])
 
-    # Get index of watched shows present in dataset
-    idx_list = [title_to_index.get(title) for title in watched if title in title_to_index.index]
+    # Find indices of watched titles
+    watched_indices = [i for i, item in enumerate(data) if item['title'] in watched]
 
-    if not idx_list:
-        return jsonify({'recommendations': []})
+    # If no valid titles found return empty
+    if not watched_indices:
+        return jsonify([])
 
-    # Average similarity score across watched shows to all shows
-    sim_scores = cosine_sim[idx_list].mean(axis=0)
+    # Compute average cosine similarity across watched shows
+    sim_scores = cosine_similarity(tfidf_matrix[watched_indices], tfidf_matrix).mean(axis=0)
 
-    # Recommend shows not in watched, top 5
-    watched_indices = set(idx_list)
-    sim_scores_filtered = [(i, score) for i, score in enumerate(sim_scores) if i not in watched_indices]
-    sim_scores_filtered.sort(key=lambda x: x[1], reverse=True)
-    top5 = sim_scores_filtered[:5]
+    # Exclude watched from recommendations
+    for idx in watched_indices:
+        sim_scores[idx] = -1
 
-    recs = []
-    for i, score in top5:
-        row = shows_df.iloc[i]
-        recs.append({
-            'title': row['title'],
-            'description': row['description'],
-            'poster_url': row['poster_url'],
-            'genres': row['genres'],
-            'actors': row['actors'],
-            'directors': row['directors']
-        })
+    # Get top 5 recommendations
+    recommend_indices = sim_scores.argsort()[::-1][:5]
+    recs = [data[i] for i in recommend_indices if sim_scores[i] > 0]
 
-    return jsonify({'recommendations': recs})
+    return jsonify(recs)
 
 if __name__ == '__main__':
     app.run(debug=True)
