@@ -8,7 +8,6 @@ document.getElementById('searchForm').addEventListener('submit', function(event)
     return;
   }
 
-  // Placeholder: show search text, connect to your logic/backend here
+  // Simulate search result display; replace this with actual API call integration
   resultsEl.textContent = `You searched for: "${query}" — recommendation engine coming soon!`;
 });
-
