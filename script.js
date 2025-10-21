@@ -8,16 +8,122 @@ const moviesDb = [
   { title: 'Sherlock', poster: 'https://pixabay.com/get/g87e6bf3440fafabf53ffa9e0f8f56bcc38d43a03e3dfae0bc55f2742aff3b88b_300.jpg', genre: 'Crime, Mystery', director: 'Paul McGuigan', actors: 'Benedict Cumberbatch', country: 'UK', desc: 'Modern-day adaptation of Sherlock Holmes detective stories.' },
   { title: 'True Detective', poster: 'https://images.unsplash.com/photo-1484103770520-7acfcbf7473b?auto=format&fit=crop&w=300&q=80', genre: 'Crime, Thriller', director: 'Cary Joji Fukunaga', actors: 'Matthew McConaughey', country: 'US', desc: 'Crime drama series with different detectives investigating grisly crimes.' },
   { title: 'Castle', poster: 'https://pixabay.com/get/g4165b7292bd5b547869cbc3f58a9a49ffed1ae1e77e0e4eb15ccefe4351e2694_300.jpg', genre: 'Crime, Comedy', director: 'Andrew W. Marlowe', actors: 'Nathan Fillion', country: 'US', desc: 'A mystery novelist teams with an NYPD detective to solve crimes.' },
-  // Add more items similarly for a larger dataset
+  // Add more if needed
 ];
 
-// Case-insensitive fuzzy match function
+// Your new showsDb dataset integrated below
+const showsDb = [
+  {
+    title: 'Dexter',
+    poster: 'https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p185267_b_v8_ac.jpg',
+    genre: 'Crime, Drama',
+    director: 'Michael Cuesta',
+    actors: 'Michael C. Hall',
+    country: 'US',
+    desc: 'A Miami forensic expert hides his double life as a serial killer while solving crimes.'
+  },
+  {
+    title: 'Breaking Bad',
+    poster: 'https://resizing.flixster.com/PLUQRzpsaCQazJPOsdc6CI4AxIk=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p8696131_b_h9_aa.jpg',
+    genre: 'Crime, Drama, Thriller',
+    director: 'Vince Gilligan',
+    actors: 'Bryan Cranston',
+    country: 'US',
+    desc: 'A chemistry teacher turned methamphetamine manufacturer faces moral dilemmas and law enforcement.'
+  },
+  {
+    title: 'Stranger Things',
+    poster: 'https://resizing.flixster.com/98TQcHJjUJSBLBmiig7_U7Kadyg=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p12991665_b_h9_aa.jpg',
+    genre: 'Drama, Fantasy, Horror',
+    director: 'The Duffer Brothers',
+    actors: 'Millie Bobby Brown',
+    country: 'US',
+    desc: 'Kids confront supernatural forces in a small town.'
+  },
+  {
+    title: 'Squid Game',
+    poster: 'https://resizing.flixster.com/6F48KCzRu11SMjGcFGBwv4Q6LTg=/206x305/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p20492218_b_v8_ae.jpg',
+    genre: 'Drama, Thriller',
+    director: 'Hwang Dong-hyuk',
+    actors: 'Lee Jung-jae',
+    country: 'KR',
+    desc: 'Contestants risk their lives in deadly games.'
+  },
+  {
+    title: 'Peacemaker',
+    poster: 'https://resizing.flixster.com/YjquXjsEOPntiHVUvZlTljYnlZw=/ems.cHJkLWVtcy1hc3NldHMvdHZzZWFzb24vNDJkODE0MDctYjAzNy00MWIyLTlmMjgtZDM5YWY3MDI0YjUzLmpwZw==',
+    genre: 'Action, Comedy, Superhero',
+    director: 'James Gunn',
+    actors: 'John Cena',
+    country: 'US',
+    desc: 'A flawed antihero fights for peace at any cost.'
+  },
+  {
+    title: 'Dexter: Resurrection',
+    poster: 'https://resizing.flixster.com/Y4hsqPBGzSlx9x8p0GTrUVuGj6E=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p30176692_b_v13_ae.jpg',
+    genre: 'Crime, Drama',
+    director: 'Charles H. Eglee',
+    actors: 'Michael C. Hall',
+    country: 'US',
+    desc: 'The return of Dexter Morgan after faked death.'
+  },
+  {
+    title: 'Dexter: New Blood',
+    poster: 'https://m.media-amazon.com/images/M/MV5BZGY4YjY5MGItNzM2NS00Y2M1LWFkYTYtZjI0ZDk3NTE0NmE0XkEyXkFqcGc@._V1_.jpg',
+    genre: 'Crime, Drama',
+    director: 'Edison Krebs',
+    actors: 'Michael C. Hall',
+    country: 'US',
+    desc: 'Dexter starts a new life in upstate New York.'
+  },
+  {
+    title: 'Dexter: Original Sin',
+    poster: 'https://resizing.flixster.com/0ZR_MoGv9oXxpLhDahhS_iOKlxE=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p28319476_b_h9_ac.jpg',
+    genre: 'Crime, Drama',
+    director: 'Anton Cropper',
+    actors: 'Clancy Brown',
+    country: 'US',
+    desc: 'New chapter in Dexter saga with dark secrets.'
+  },
+  {
+    title: 'Better Call Saul',
+    poster: 'https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p13837077_b_v8_av.jpg',
+    genre: 'Crime, Drama',
+    director: 'Vince Gilligan',
+    actors: 'Bob Odenkirk',
+    country: 'US',
+    desc: 'The story of Jimmy McGill before he became Saul Goodman.'
+  },
+  {
+    title: 'The Sopranos',
+    poster: 'https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p184487_b_v8_bg.jpg',
+    genre: 'Crime, Drama',
+    director: 'David Chase',
+    actors: 'James Gandolfini',
+    country: 'US',
+    desc: 'New Jersey mob boss copes with personal and professional issues.'
+  },
+  {
+    title: 'Supernatural',
+    poster: 'https://resizing.flixster.com/om9VCp1cZlY13TCNV5BdtBXIKVY=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p185113_b_h8_bg.jpg',
+    genre: 'Drama, Fantasy, Horror',
+    director: 'Eric Kripke',
+    actors: 'Jared Padalecki, Jensen Ackles',
+    country: 'US',
+    desc: 'Brothers hunt supernatural creatures while facing dark forces.'
+  }
+];
+
+// Combine moviesDb and showsDb into one for search and recommendation (optional)
+const combinedDb = [...moviesDb, ...showsDb];
+
+// Case-insensitive fuzzy match function adapted for combinedDb (use whichever dataset you want)
 function autoSuggest(query) {
   const q = query.toLowerCase();
-  return moviesDb.filter(movie =>
-    movie.title.toLowerCase().includes(q) ||
-    movie.actors.toLowerCase().includes(q) ||
-    movie.director.toLowerCase().includes(q)
+  return combinedDb.filter(item =>
+    item.title.toLowerCase().includes(q) ||
+    item.actors.toLowerCase().includes(q) ||
+    item.director.toLowerCase().includes(q)
   ).slice(0,6);
 }
 
@@ -74,7 +180,7 @@ searchInput.addEventListener('input', () => {
 
 doneBtn.onclick = () => {
   if (watched.length === 0) return;
-  const watchedObjs = moviesDb.filter(m => watched.includes(m.title));
+  const watchedObjs = combinedDb.filter(m => watched.includes(m.title));
   function arr(str){
     return str ? str.split(/,\s*/) : [];
   }
@@ -84,7 +190,7 @@ doneBtn.onclick = () => {
     allDirectors = allDirectors.concat(arr(m.director));
     allGenre = allGenre.concat(arr(m.genre));
   });
-  const scores = moviesDb.map(m => {
+  const scores = combinedDb.map(m => {
     if (watched.includes(m.title)) return {movie:m,score:-1};
     let score = 0;
     arr(m.actors).forEach(a => {if(allActors.includes(a)) score += 2;});
