@@ -1,29 +1,40 @@
-function getRecommendations() {
-    const shows = document.getElementById('watched').value
-        .split(',')
-        .map(s => s.trim())
-        .filter(s => s.length > 0);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NeonView: Show Recommender</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Video -->
+    <video autoplay muted loop id="bgVideo">
+        <source src="bg.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
 
-    document.getElementById('results').innerHTML = 'Getting recommendations...';
+    <div class="container">
+        <div class="header-section">
+            <h1>NeonView</h1>
+            <p class="subtitle">Discover your next binge-worthy show</p>
+        </div>
 
-    fetch('http://127.0.0.1:5000/recommend', { // Update to your deployed backend API URL!
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({shows: shows})
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.top_shows && data.top_shows.length > 0) {
-            document.getElementById('results').innerHTML =
-                '<h2 style="color:#19ffe6;margin-bottom:0.7em;text-shadow:0 0 14px #19ffe69c;">Top Recommendations:</h2>' +
-                '<ul>' + data.top_shows.map(
-                    show => `<li>${show}</li>`
-                ).join('') + '</ul>';
-        } else {
-            document.getElementById('results').innerHTML = 'No recommendations found.';
-        }
-    })
-    .catch(err => {
-        document.getElementById('results').innerHTML = 'Error: Unable to connect to backend.';
-    });
-}
+        <div class="search-section">
+            <div class="input-group">
+                <input 
+                    type="text" 
+                    id="watched" 
+                    class="curved-input"
+                    placeholder="Enter shows you've watched: Breaking Bad, Stranger Things, The Office">
+                <button class="recommend-btn" onclick="getRecommendations()">
+                    <span>Get Recommendations</span>
+                </button>
+            </div>
+        </div>
+        
+        <div id="results">
+            <!-- Recommendation cards appear here -->
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
