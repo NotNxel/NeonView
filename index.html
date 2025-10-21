@@ -13,16 +13,24 @@
     </video>
 
     <div class="container">
-        <h1>NeonView</h1>
-        <p class="subtitle">Show Recommender</p>
-        <div class="input-group">
-            <input 
-                type="text" 
-                id="watched" 
-                class="curved-input"
-                placeholder="Enter shows you’ve watched: Dexter, Narcos, Sherlock">
-            <button class="recommend-btn" onclick="getRecommendations()">Recommend</button>
+        <div class="header-section">
+            <h1>NeonView</h1>
+            <p class="subtitle">Discover your next binge-worthy show</p>
         </div>
+        
+        <div class="search-section">
+            <div class="input-group">
+                <input 
+                    type="text" 
+                    id="watched" 
+                    class="curved-input"
+                    placeholder="Enter shows you've watched: Breaking Bad, Stranger Things, The Office">
+                <button class="recommend-btn" onclick="getRecommendations()">
+                    <span>Get Recommendations</span>
+                </button>
+            </div>
+        </div>
+        
         <div id="results"></div>
     </div>
     <script src="script.js"></script>
