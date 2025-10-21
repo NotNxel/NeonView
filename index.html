@@ -4,17 +4,18 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NeonView</title>
-<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 </head>
 <body>
-  <div class="container">
-    <h1>Show & Movie Recommender</h1>
-    <form id="searchForm">
-      <input type="search" id="query" placeholder="Search for a show or movie..." autocomplete="off" required />
-      <button type="submit">Search</button>
-    </form>
-    <div id="results"></div>
-  </div>
-  <script src="script.js"></script>
+<div class="container">
+  <h1>Show & Movie Recommender</h1>
+  <div id="pill-container"></div>
+  <input type="search" id="search-input" placeholder="Search for your watched shows..." autocomplete="off" />
+  <div id="suggestions"></div>
+  <button id="done-button" disabled>Done</button>
+
+  <div id="recommendations"></div>
+</div>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
