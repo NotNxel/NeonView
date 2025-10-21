@@ -23,7 +23,7 @@ function getRecommendations() {
                 title: "Dexter",
                 year: 2006,
                 desc: "A Miami-based blood splatter expert for the police leads a secret life as a serial killer.",
-                poster: "https://image.tmdb.org/t/p/w200/y8Rsfh2Szq2yHf9H1YbCqDkJfVZ.jpg"
+                poster: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSyQ_KxaUOgMjJhMNLelunH6HQNcHckCtQoNHO_CYiWwMmM2SRi0Wf7mHE9i_67UVoJRsDKiHhYJ4NJrWnn5Sas3_Wd5xvrf_Afrrfiw243YA"
             },
             {
                 title: "Fight Club",
