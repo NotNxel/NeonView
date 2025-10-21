@@ -1,32 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>NeonView: Movie Selector</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NeonView</title>
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <video autoplay muted loop id="bgVideo">
-        <source src="bg.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-    <div class="main-header">
-        <h1>NeonView</h1>
-    </div>
-    <div class="pill-search-section">
-        <form id="searchform" onsubmit="return false;">
-            <div class="pill-searchbar" id="pill-searchbar">
-                <!-- Pills will be inserted here via JS -->
-                <input
-                    type="text"
-                    id="movieInput"
-                    class="search-pill-input"
-                    autocomplete="off"
-                    placeholder="Search movies..."
-                    oninput="showSuggestions(this.value)">
-                <div class="suggestions" id="suggestions"></div>
-            </div>
-            <button class="search-btn" onclick="submitSearch()">Search</button>
-        </form>
-    </div>
-    <div class="result-section">Recommended for
+  <div class="container">
+    <h1>Show & Movie Recommender</h1>
+    <form id="searchForm">
+      <input type="search" id="query" placeholder="Search for a show or movie..." autocomplete="off" required />
+      <button type="submit">Search</button>
+    </form>
+    <div id="results"></div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
