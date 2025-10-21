@@ -11,22 +11,38 @@ function getRecommendations() {
 
     document.getElementById('results').innerHTML = '<div style="text-align: center; color: #19ffe6;">Getting recommendations...</div>';
 
-    fetch('http://127.0.0.1:5000/recommend', { // Change this to your deployed backend!
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({shows: shows})
-    })
-    .then(response => response.json())
-    .then(data => {
-        renderRecommendations(data.top_shows || []);
-    })
-    .catch(err => {
-        document.getElementById('results').innerHTML = '<div style="text-align: center; color: #ff6b6b;">Unable to connect to recommendation service.</div>';
-    });
+    // Example: Replace fetch call with real backend later
+    setTimeout(() => {
+        renderRecommendations([
+            {
+                title: "Inception",
+                year: 2010,
+                desc: "A thief who steals secrets through dream-sharing technology.",
+                poster: "https://image.tmdb.org/t/p/w200/qmDpIHrmpJINaRKAfWQfftjCdyi.jpg"
+            },
+            {
+                title: "The Matrix",
+                year: 1999,
+                desc: "A computer hacker discovers reality and rebels against its controllers.",
+                poster: "https://image.tmdb.org/t/p/w200/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg"
+            },
+            {
+                title: "Stranger Things",
+                year: 2016,
+                desc: "When a young boy disappears, his mother and friends confront supernatural forces.",
+                poster: "https://image.tmdb.org/t/p/w200/x2LSRK2Cm7MZhjluni1msVJ3wDF.jpg"
+            },
+            {
+                title: "Fight Club",
+                year: 1999,
+                desc: "An insomniac and a soap maker form an underground fight club.",
+                poster: "https://image.tmdb.org/t/p/w200/a26cQPRhJPX6GbWfQbvZdrrp9j9.jpg"
+            }
+        ]);
+    }, 800);
 }
 
 function renderRecommendations(recs) {
-    // recs: Array of objects: {title, year, desc, poster}
     if (!recs.length) {
         document.getElementById('results').innerHTML = '<div style="text-align:center;">No recommendations found.</div>';
         return;
@@ -49,19 +65,32 @@ function renderRecommendations(recs) {
     `;
 }
 
-// Demo/Test - Show some recommendations if you want to preview
-// Uncomment to see demo cards:
-// renderRecommendations([
-//     {
-//         title: "Inception",
-//         year: 2010,
-//         desc: "A thief who steals corporate secrets through use of dream-sharing technology is given the inverse task of planting an idea.",
-//         poster: "https://image.tmdb.org/t/p/w200/qmDpIHrmpJINaRKAfWQfftjCdyi.jpg"
-//     },
-//     {
-//         title: "The Matrix",
-//         year: 1999,
-//         desc: "A computer hacker learns about the true nature of reality and his role in the war against its controllers.",
-//         poster: "https://image.tmdb.org/t/p/w200/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg"
-//     }
-// ]);
+// Show demo cards *on page load* for testing, remove or comment later!
+window.onload = function(){
+    renderRecommendations([
+        {
+            title: "Inception",
+            year: 2010,
+            desc: "A thief who steals secrets through dream-sharing technology.",
+            poster: "https://image.tmdb.org/t/p/w200/qmDpIHrmpJINaRKAfWQfftjCdyi.jpg"
+        },
+        {
+            title: "The Matrix",
+            year: 1999,
+            desc: "A computer hacker discovers reality and rebels against its controllers.",
+            poster: "https://image.tmdb.org/t/p/w200/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg"
+        },
+        {
+            title: "Stranger Things",
+            year: 2016,
+            desc: "When a young boy disappears, his mother and friends confront supernatural forces.",
+            poster: "https://image.tmdb.org/t/p/w200/x2LSRK2Cm7MZhjluni1msVJ3wDF.jpg"
+        },
+        {
+            title: "Fight Club",
+            year: 1999,
+            desc: "An insomniac and a soap maker form an underground fight club.",
+            poster: "https://image.tmdb.org/t/p/w200/a26cQPRhJPX6GbWfQbvZdrrp9j9.jpg"
+        }
+    ]);
+}
