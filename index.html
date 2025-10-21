@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>NeonView: Show Recommender</title>
+    <title>NeonView: Movie Selector</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,12 +13,20 @@
     <div class="main-header">
         <h1>NeonView</h1>
     </div>
-
-    <div id="results-section">
-        <div class="result-section">Recommended for You</div>
-        <div id="results"></div>
-        <button class="done-btn" onclick="doneAction()">Done</button>
+    <div class="pill-search-section">
+        <form id="searchform" onsubmit="return false;">
+            <div class="pill-searchbar" id="pill-searchbar">
+                <!-- Pills will be inserted here via JS -->
+                <input
+                    type="text"
+                    id="movieInput"
+                    class="search-pill-input"
+                    autocomplete="off"
+                    placeholder="Search movies..."
+                    oninput="showSuggestions(this.value)">
+                <div class="suggestions" id="suggestions"></div>
+            </div>
+            <button class="search-btn" onclick="submitSearch()">Search</button>
+        </form>
     </div>
-    <script src="script.js"></script>
-</body>
-</html>
+    <div class="result-section">Recommended for
