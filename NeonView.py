@@ -1,44 +1,76 @@
+import json
+from flask import Flask, request, jsonify, render_template
 import pandas as pd
-from flask import Flask, request, jsonify
-from flask_cors import CORS
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
 app = Flask(__name__)
-CORS(app)
 
-# Load the TV shows dataset
-shows_df = pd.read_csv('tv_shows.csv')  # <- Use your actual filename
+# Load your dataset (replace with your real dataset path)
+# Dataset has: id, title, description, genres, actors, directors, poster_url
+shows_df = pd.read_csv('shows_dataset.csv').fillna('')
 
-def get_year(date_str):
-    if pd.isna(date_str): return ""
-    return str(date_str).split("-")[0]
+# Combine searchable fields for content-based recommendation
+shows_df['combined_features'] = (
+    shows_df['genres'] + ' ' + shows_df['actors'] + ' ' + shows_df['directors'] + ' ' + shows_df['description']
+)
 
-def make_poster_url(path):
-    return f"https://image.tmdb.org/t/p/w200{path}" if pd.notna(path) and path else "https://via.placeholder.com/100x140.png?text=No+Image"
+tfidf = TfidfVectorizer(stop_words='english')
+tfidf_matrix = tfidf.fit_transform(shows_df['combined_features'])
+cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
 
-@app.route('/lookup')
-def lookup():
-    query = request.args.get('query', '').strip().lower()
-    if not query:
-        return jsonify([])
-    matches = shows_df[shows_df['name'].str.lower().str.contains(query)]
-    return jsonify(matches['name'].drop_duplicates().tolist()[:10])
+# Map title to index
+title_to_index = pd.Series(shows_df.index, index=shows_df['title'].str.lower())
 
-@app.route('/recommend', methods=['POST'])
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+@app.route('/api/search')
+def search():
+    query = request.args.get('q', '').lower()
+    # Simple partial matching
+    matches = shows_df[shows_df['title'].str.lower().str.contains(query)]
+    results = matches[['title', 'poster_url']].head(7).to_dict(orient='records')
+    return jsonify(results)
+
+@app.route('/api/recommend', methods=['POST'])
 def recommend():
+    """
+    Expects JSON: { watched: ["title1", "title2", ...] }
+    Returns 5 recommended shows with their metadata.
+    """
     data = request.get_json()
-    selected_titles = set([t.lower() for t in data.get('shows', [])])
-    pool = shows_df[~shows_df['name'].str.lower().isin(selected_titles)]
-    sample = pool.sample(min(8, len(pool))) if not pool.empty else shows_df.head(8)
-    top_shows = [
-        {
-            "title": x['name'],
-            "year": get_year(x['first_air_date']),
-            "desc": x['overview'] if 'overview' in x else "",
-            "poster": make_poster_url(x['poster_path'])
-        }
-        for _, x in sample.iterrows()
-    ]
-    return jsonify({"top_shows": top_shows})
+    watched = [w.lower() for w in data.get('watched', [])]
+
+    # Get index of watched shows present in dataset
+    idx_list = [title_to_index.get(title) for title in watched if title in title_to_index.index]
+
+    if not idx_list:
+        return jsonify({'recommendations': []})
+
+    # Average similarity score across watched shows to all shows
+    sim_scores = cosine_sim[idx_list].mean(axis=0)
+
+    # Recommend shows not in watched, top 5
+    watched_indices = set(idx_list)
+    sim_scores_filtered = [(i, score) for i, score in enumerate(sim_scores) if i not in watched_indices]
+    sim_scores_filtered.sort(key=lambda x: x[1], reverse=True)
+    top5 = sim_scores_filtered[:5]
+
+    recs = []
+    for i, score in top5:
+        row = shows_df.iloc[i]
+        recs.append({
+            'title': row['title'],
+            'description': row['description'],
+            'poster_url': row['poster_url'],
+            'genres': row['genres'],
+            'actors': row['actors'],
+            'directors': row['directors']
+        })
+
+    return jsonify({'recommendations': recs})
 
 if __name__ == '__main__':
     app.run(debug=True)
