@@ -33,11 +33,9 @@ searchInput.addEventListener('input', async () => {
   const val = searchInput.value.trim();
   suggestionsBox.innerHTML = '';
   if (val.length < 2) return;
-
   try {
     const res = await fetch(`/api/search?q=${encodeURIComponent(val)}`);
     const results = await res.json();
-
     results.forEach(item => {
       if (watched.includes(item.title)) return;
       const div = document.createElement('div');
@@ -64,8 +62,8 @@ doneButton.addEventListener('click', async () => {
   try {
     const res = await fetch('/api/recommend', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({watched})
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ watched }),
     });
     const recs = await res.json();
     renderRecommendations(recs);
@@ -94,7 +92,8 @@ function renderRecommendations(recs) {
 
     const info = document.createElement('div');
     info.className = 'info';
-    info.textContent = (item.genres ? item.genres.join(', ') : '') + (item.country ? ' | ' + item.country : '');
+    info.textContent = (Array.isArray(item.genres) ? item.genres.join(', ') : item.genres || '') +
+      (item.country ? ' | ' + item.country : '');
 
     const desc = document.createElement('p');
     desc.textContent = item.description || '';
@@ -107,6 +106,5 @@ function renderRecommendations(recs) {
   });
 }
 
-// Initialize button state
 updateDoneState();
 renderPills();
