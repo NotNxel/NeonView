@@ -17,14 +17,14 @@ function renderRecommendations(recs) {
     `).join('');
 }
 
-// Show new set on load
+// Show new set on load with your custom Dexter image
 window.onload = function(){
     renderRecommendations([
         {
             title: "Dexter",
             year: 2006,
             desc: "A Miami-based blood spatter expert for the police leads a secret life as a serial killer.",
-            poster: "https://image.tmdb.org/t/p/w200/9i8uP2Hgd3ubuwM9fJ5MRgZeuWV.jpg"
+            poster: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSyQ_KxaUOgMjJhMNLelunH6HQNcHckCtQoNHO_CYiWwMmM2SRi0Wf7mHE9i_67UVoJRsDKiHhYJ4NJrWnn5Sas3_Wd5xvrf_Afrrfiw243YA"
         },
         {
             title: "Breaking Bad",
