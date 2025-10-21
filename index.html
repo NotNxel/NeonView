@@ -2,36 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NeonView</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Movie & TV Show Recommender</title>
+  <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
-  <header class="hero">
-    <div class="hero-content">
-      <h1><span class="accent">NeonView</span> Recommender</h1>
-      <p>Discover your next binge from millions of movies and shows!</p>
-    </div>
-  </header>
-
-  <main class="app">
-    <section class="search-section">
-      <div class="input-wrap">
-        <div id="pill-container"></div>
-        <input type="search" id="search-input" placeholder="Add a watched show/movie..." autocomplete="off" />
-        <div id="suggestions"></div>
-      </div>
-      <button id="done-button">Done</button>
-    </section>
-
-    <section id="recommendations" class="recommend-grid">
-      <!-- Recommendations will appear here -->
-    </section>
-  </main>
-
-  <footer>
-    <p>Made with 49C for movie lovers</p>
-  </footer>
-  <script src="script.js"></script>
+  <h1>Show & Movie Recommender</h1>
+  <input type="text" id="search-input" placeholder="Search shows or movies..." autocomplete="off" />
+  <div id="suggestions"></div>
+  <div id="watched-pills"></div>
+  <button id="recommend-btn" disabled>Get Recommendations</button>
+  <div id="recommendations"></div>
+  <script src="/static/script.js"></script>
 </body>
 </html>
