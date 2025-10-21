@@ -9,9 +9,8 @@ function getRecommendations() {
         return;
     }
 
-    document.getElementById('results').innerHTML = '<div style="text-align: center; color: #19ffe6;">Getting recommendations...</div>';
+    document.getElementById('results').innerHTML = '<div style="text-align: center; color: #ff2323;">Getting recommendations...</div>';
 
-    // Example: Replace fetch call with real backend later
     setTimeout(() => {
         renderRecommendations([
             {
@@ -21,25 +20,25 @@ function getRecommendations() {
                 poster: "https://image.tmdb.org/t/p/w200/qmDpIHrmpJINaRKAfWQfftjCdyi.jpg"
             },
             {
-                title: "The Matrix",
-                year: 1999,
-                desc: "A computer hacker discovers reality and rebels against its controllers.",
-                poster: "https://image.tmdb.org/t/p/w200/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg"
-            },
-            {
-                title: "Stranger Things",
-                year: 2016,
-                desc: "When a young boy disappears, his mother and friends confront supernatural forces.",
-                poster: "https://image.tmdb.org/t/p/w200/x2LSRK2Cm7MZhjluni1msVJ3wDF.jpg"
+                title: "Dexter",
+                year: 2006,
+                desc: "A Miami-based blood splatter expert for the police leads a secret life as a serial killer.",
+                poster: "https://image.tmdb.org/t/p/w200/y8Rsfh2Szq2yHf9H1YbCqDkJfVZ.jpg"
             },
             {
                 title: "Fight Club",
                 year: 1999,
                 desc: "An insomniac and a soap maker form an underground fight club.",
                 poster: "https://image.tmdb.org/t/p/w200/a26cQPRhJPX6GbWfQbvZdrrp9j9.jpg"
+            },
+            {
+                title: "The Matrix",
+                year: 1999,
+                desc: "A computer hacker discovers reality and rebels against its controllers.",
+                poster: "https://image.tmdb.org/t/p/w200/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg"
             }
         ]);
-    }, 800);
+    }, 850);
 }
 
 function renderRecommendations(recs) {
@@ -49,7 +48,7 @@ function renderRecommendations(recs) {
     }
 
     document.getElementById('results').innerHTML = `
-        <div class="result-section">Popular Recommendations</div>
+        <div class="result-section">Recommended for You</div>
         ${
             recs.map(rec => `
             <div class="result-card">
@@ -65,9 +64,15 @@ function renderRecommendations(recs) {
     `;
 }
 
-// Show demo cards *on page load* for testing, remove or comment later!
+// Show red demo cards on homepage for testing, remove/comment when backend is live!
 window.onload = function(){
     renderRecommendations([
+        {
+            title: "Dexter",
+            year: 2006,
+            desc: "A Miami-based blood splatter expert for the police leads a secret life as a serial killer.",
+            poster: "https://image.tmdb.org/t/p/w200/y8Rsfh2Szq2yHf9H1YbCqDkJfVZ.jpg"
+        },
         {
             title: "Inception",
             year: 2010,
@@ -75,22 +80,16 @@ window.onload = function(){
             poster: "https://image.tmdb.org/t/p/w200/qmDpIHrmpJINaRKAfWQfftjCdyi.jpg"
         },
         {
-            title: "The Matrix",
-            year: 1999,
-            desc: "A computer hacker discovers reality and rebels against its controllers.",
-            poster: "https://image.tmdb.org/t/p/w200/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg"
-        },
-        {
-            title: "Stranger Things",
-            year: 2016,
-            desc: "When a young boy disappears, his mother and friends confront supernatural forces.",
-            poster: "https://image.tmdb.org/t/p/w200/x2LSRK2Cm7MZhjluni1msVJ3wDF.jpg"
-        },
-        {
             title: "Fight Club",
             year: 1999,
             desc: "An insomniac and a soap maker form an underground fight club.",
             poster: "https://image.tmdb.org/t/p/w200/a26cQPRhJPX6GbWfQbvZdrrp9j9.jpg"
+        },
+        {
+            title: "The Matrix",
+            year: 1999,
+            desc: "A computer hacker discovers reality and rebels against its controllers.",
+            poster: "https://image.tmdb.org/t/p/w200/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg"
         }
     ]);
 }
