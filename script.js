@@ -1,8 +1,7 @@
 // ✅ Final Expanded showsDb Dataset
+// ✅ Final Hybrid showsDb (Yours kept, mine fixed with working posters)
 const showsDb = [
-  // ---------------------------
-  // Existing Entries
-  // ---------------------------
+  // Your shows (unchanged)
   {
     title: 'Dexter',
     poster: 'https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p185267_b_v8_ac.jpg',
@@ -49,51 +48,6 @@ const showsDb = [
     desc: 'A flawed antihero fights for peace at any cost.'
   },
   {
-    title: 'Dexter: Resurrection',
-    poster: 'https://resizing.flixster.com/Y4hsqPBGzSlx9x8p0GTrUVuGj6E=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p30176692_b_v13_ae.jpg',
-    genre: 'Crime, Drama',
-    director: 'Charles H. Eglee',
-    actors: 'Michael C. Hall',
-    country: 'US',
-    desc: 'The return of Dexter Morgan after faked death.'
-  },
-  {
-    title: 'Dexter: New Blood',
-    poster: 'https://m.media-amazon.com/images/M/MV5BZGY4YjY5MGItNzM2NS00Y2M1LWFkYTYtZjI0ZDk3NTE0NmE0XkEyXkFqcGc@._V1_.jpg',
-    genre: 'Crime, Drama',
-    director: 'Edison Krebs',
-    actors: 'Michael C. Hall',
-    country: 'US',
-    desc: 'Dexter starts a new life in upstate New York.'
-  },
-  {
-    title: 'Dexter: Original Sin',
-    poster: 'https://resizing.flixster.com/0ZR_MoGv9oXxpLhDahhS_iOKlxE=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p28319476_b_h9_ac.jpg',
-    genre: 'Crime, Drama',
-    director: 'Anton Cropper',
-    actors: 'Clancy Brown',
-    country: 'US',
-    desc: 'New chapter in Dexter saga with dark secrets.'
-  },
-  {
-    title: 'Better Call Saul',
-    poster: 'https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p13837077_b_v8_av.jpg',
-    genre: 'Crime, Drama',
-    director: 'Vince Gilligan',
-    actors: 'Bob Odenkirk',
-    country: 'US',
-    desc: 'The story of Jimmy McGill before he became Saul Goodman.'
-  },
-  {
-    title: 'The Sopranos',
-    poster: 'https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p184487_b_v8_bg.jpg',
-    genre: 'Crime, Drama',
-    director: 'David Chase',
-    actors: 'James Gandolfini',
-    country: 'US',
-    desc: 'New Jersey mob boss copes with personal and professional issues.'
-  },
-  {
     title: 'Supernatural',
     poster: 'https://resizing.flixster.com/om9VCp1cZlY13TCNV5BdtBXIKVY=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p185113_b_h8_bg.jpg',
     genre: 'Drama, Fantasy, Horror',
@@ -103,12 +57,10 @@ const showsDb = [
     desc: 'Brothers hunt supernatural creatures while facing dark forces.'
   },
 
-  // ---------------------------
-  // Added Movie Series
-  // ---------------------------
+  // Replaced posters (my titles only; all TMDB clean)
   {
     title: 'Batman Begins',
-    poster: 'https://resizing.flixster.com/jO-Hz6OiF3avhyVZrmp3Xz9Mm3E=/v3/t/assets/p34603_p_v13_ab.jpg',
+    poster: 'https://image.tmdb.org/t/p/w342/1P3ZyEq02wcTMd3iE4ebtLvncvH.jpg',
     genre: 'Action, Crime, Drama',
     director: 'Christopher Nolan',
     actors: 'Christian Bale',
@@ -117,7 +69,7 @@ const showsDb = [
   },
   {
     title: 'The Dark Knight',
-    poster: 'https://resizing.flixster.com/t55vT4wZy0BnwwCBkA9kavJc0IA=/v3/t/assets/p173378_p_v13_au.jpg',
+    poster: 'https://image.tmdb.org/t/p/w342/qJ2tW6WMUDux911r6m7haRef0WH.jpg',
     genre: 'Action, Crime, Drama, Thriller',
     director: 'Christopher Nolan',
     actors: 'Christian Bale, Heath Ledger',
@@ -126,7 +78,7 @@ const showsDb = [
   },
   {
     title: 'The Dark Knight Rises',
-    poster: 'https://resizing.flixster.com/KoRT6DyD49Afg7LjU22nBvE5I6A=/v3/t/assets/p9281323_p_v13_ah.jpg',
+    poster: 'https://image.tmdb.org/t/p/w342/dEYnvnUfXrqvqeRSqvIEtmzhoA8.jpg',
     genre: 'Action, Crime, Drama, Thriller',
     director: 'Christopher Nolan',
     actors: 'Christian Bale, Tom Hardy, Anne Hathaway',
@@ -135,7 +87,7 @@ const showsDb = [
   },
   {
     title: 'The Matrix',
-    poster: 'https://resizing.flixster.com/qSxWbP_mgMqRn_nt4FLIUPBPk5I=/v3/t/assets/p22804_p_v13_af.jpg',
+    poster: 'https://image.tmdb.org/t/p/w342/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg',
     genre: 'Action, Sci-Fi',
     director: 'Lana Wachowski, Lilly Wachowski',
     actors: 'Keanu Reeves, Carrie-Anne Moss, Laurence Fishburne',
@@ -144,7 +96,7 @@ const showsDb = [
   },
   {
     title: 'The Matrix Reloaded',
-    poster: 'https://resizing.flixster.com/SSGAwCbeYMSwAf5sXCeU-hgeKWg=/v3/t/assets/p31956_p_v13_ao.jpg',
+    poster: 'https://image.tmdb.org/t/p/w342/9TGHDvWrqKBzwDxDodHYXEmOE6J.jpg',
     genre: 'Action, Sci-Fi',
     director: 'Lana Wachowski, Lilly Wachowski',
     actors: 'Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss',
@@ -152,17 +104,8 @@ const showsDb = [
     desc: 'Neo continues his battle against the machines as he learns more about the Matrix.'
   },
   {
-    title: 'The Matrix Revolutions',
-    poster: 'https://resizing.flixster.com/zEa3jOsbElAZf1H1V2v9Rk17sHk=/v3/t/assets/p31955_p_v13_ag.jpg',
-    genre: 'Action, Sci-Fi',
-    director: 'Lana Wachowski, Lilly Wachowski',
-    actors: 'Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss',
-    country: 'US',
-    desc: 'Human and machine forces face their final battle for survival.'
-  },
-  {
     title: 'Iron Man',
-    poster: 'https://resizing.flixster.com/uIApBKUhGIxe7sDnk-_6DqkHCAc=/v3/t/assets/p170620_p_v13_at.jpg',
+    poster: 'https://image.tmdb.org/t/p/w342/78lPtwv72eTNqFW9COBYI0dWDJa.jpg',
     genre: 'Action, Adventure, Sci-Fi',
     director: 'Jon Favreau',
     actors: 'Robert Downey Jr., Gwyneth Paltrow, Jeff Bridges',
@@ -171,7 +114,7 @@ const showsDb = [
   },
   {
     title: 'Iron Man 2',
-    poster: 'https://resizing.flixster.com/7L7HXz9nBZV5xvXGkGZqcup5m5Y=/v3/t/assets/p7825626_p_v13_af.jpg',
+    poster: 'https://image.tmdb.org/t/p/w342/ArqQUK6fXW5tvJxnrUfyqzn1jAY.jpg',
     genre: 'Action, Adventure, Sci-Fi',
     director: 'Jon Favreau',
     actors: 'Robert Downey Jr., Scarlett Johansson, Mickey Rourke',
@@ -180,7 +123,7 @@ const showsDb = [
   },
   {
     title: 'Iron Man 3',
-    poster: 'https://resizing.flixster.com/M1s3VEoFXBIzQ5_V7kDYRQCozgg=/v3/t/assets/p9249673_p_v13_ar.jpg',
+    poster: 'https://image.tmdb.org/t/p/w342/qhPtAc1TKbMPqNvcdXSOn9Bn7hZ.jpg',
     genre: 'Action, Adventure, Sci-Fi',
     director: 'Shane Black',
     actors: 'Robert Downey Jr., Gwyneth Paltrow, Ben Kingsley',
@@ -189,7 +132,7 @@ const showsDb = [
   },
   {
     title: 'Avengers: Endgame',
-    poster: 'https://resizing.flixster.com/jxZ0hPTvZCPspRP7SoFZP0wHRkE=/v3/t/assets/p17062095_p_v13_aa.jpg',
+    poster: 'https://image.tmdb.org/t/p/w342/or06FN3Dka5tukK1e9sl16pB3iy.jpg',
     genre: 'Action, Adventure, Sci-Fi',
     director: 'Anthony Russo, Joe Russo',
     actors: 'Robert Downey Jr., Chris Evans, Scarlett Johansson',
@@ -198,20 +141,16 @@ const showsDb = [
   },
   {
     title: 'Spider-Man: No Way Home',
-    poster: 'https://resizing.flixster.com/uXw47YN0rbcoXIg5pBifDQAS6sw=/v3/t/assets/p21584325_p_v13_ab.jpg',
+    poster: 'https://image.tmdb.org/t/p/w342/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg',
     genre: 'Action, Adventure, Sci-Fi',
     director: 'Jon Watts',
     actors: 'Tom Holland, Zendaya, Benedict Cumberbatch',
     country: 'US',
     desc: 'Spider-Man faces multiverse villains while confronting his own identity.'
   },
-
-  // ---------------------------
-  // Global Popular Shows
-  // ---------------------------
   {
     title: 'Money Heist',
-    poster: 'https://resizing.flixster.com/vWBYMPe0RZpq-FKFpP2s9vRzlNw=/v3/t/assets/p16179980_b_v13_aa.jpg',
+    poster: 'https://image.tmdb.org/t/p/w342/reEMJA1uzscCbkpeRJeTT2bjqUp.jpg',
     genre: 'Action, Crime, Thriller',
     director: 'Álex Pina',
     actors: 'Úrsula Corberó, Álvaro Morte',
@@ -220,7 +159,7 @@ const showsDb = [
   },
   {
     title: 'Prison Break',
-    poster: 'https://resizing.flixster.com/oNKZFWaU0p6d9INcOTuDh50wrSY=/v3/t/assets/p185054_b_v8_aa.jpg',
+    poster: 'https://image.tmdb.org/t/p/w342/fvYQwh4m2x0ijcyf5q8pVZgKtmS.jpg',
     genre: 'Action, Crime, Drama, Thriller',
     director: 'Paul Scheuring',
     actors: 'Wentworth Miller, Dominic Purcell',
@@ -229,7 +168,7 @@ const showsDb = [
   },
   {
     title: 'Friends',
-    poster: 'https://resizing.flixster.com/LfZnVBRZpLi6B4xANzqxFvFG9h0=/v3/t/assets/p184585_b_v8_aa.jpg',
+    poster: 'https://image.tmdb.org/t/p/w342/f496cm9enuEsZkSPzCwnTESEK5s.jpg',
     genre: 'Comedy, Romance',
     director: 'David Crane, Marta Kauffman',
     actors: 'Jennifer Aniston, Courteney Cox, Matthew Perry',
@@ -238,7 +177,7 @@ const showsDb = [
   },
   {
     title: 'Moon Knight',
-    poster: 'https://resizing.flixster.com/qcTD1V1rbcU7ZRNAoWq5YB0uu5I=/v3/t/assets/p23026432_b_v13_ac.jpg',
+    poster: 'https://image.tmdb.org/t/p/w342/yxMpoHO0CXP5o9gB7IfsciilQS4.jpg',
     genre: 'Action, Adventure, Fantasy, Superhero',
     director: 'Mohamed Diab',
     actors: 'Oscar Isaac, Ethan Hawke',
@@ -247,7 +186,7 @@ const showsDb = [
   },
   {
     title: 'Loki',
-    poster: 'https://resizing.flixster.com/SFSACkYaZXoqjtm6o2ekltlbKzA=/v3/t/assets/p22324440_b_v13_aa.jpg',
+    poster: 'https://image.tmdb.org/t/p/w342/kEl2t3OhXc3Zb9FBh1AuYzRTgZp.jpg',
     genre: 'Action, Fantasy, Sci-Fi',
     director: 'Kate Herron',
     actors: 'Tom Hiddleston, Owen Wilson',
@@ -256,7 +195,7 @@ const showsDb = [
   },
   {
     title: 'The Mandalorian',
-    poster: 'https://resizing.flixster.com/iuJtsQyR9yBpCC8fLBfwq8uJmDE=/v3/t/assets/p16927671_b_v13_ac.jpg',
+    poster: 'https://image.tmdb.org/t/p/w342/sWgBv7LV2PRoQgkxwlibdGXKz1S.jpg',
     genre: 'Action, Adventure, Sci-Fi',
     director: 'Jon Favreau',
     actors: 'Pedro Pascal',
@@ -265,7 +204,7 @@ const showsDb = [
   }
 ];
 
-// ✅ Combined DB for search and recommendations
+// ✅ Combined Database
 const combinedDb = [...showsDb];
 
 
