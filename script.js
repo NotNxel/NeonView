@@ -1,4 +1,4 @@
-import { showsDb } from './shows.js';
+import { showsDb } from 'shows.js';
 
 const pillContainer = document.getElementById('pill-container');
 const searchInput = document.getElementById('search-input');
